@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
 
 			push('/home');
 		} catch (err: any) {
-			console.log(err.message);
+			throw new Error(err.response.data.message);
 		}
 	}
 

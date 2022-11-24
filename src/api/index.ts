@@ -24,9 +24,6 @@ export function requestsWithSSR(ctx: GetServerSidePropsContext) {
 
 			if (error.response?.status === 401) {
 				if (error.response?.data.message === 'jwt expired') {
-					console.log('oi');
-					console.log(axiosInstanceSSR);
-
 					const originalConfig = error.config;
 
 					if (!isRefreshing) {
@@ -37,7 +34,7 @@ export function requestsWithSSR(ctx: GetServerSidePropsContext) {
 								headers: { authorization: `Bearer ${refreshToken}` },
 							})
 							.then((response) => {
-								const { token } = response.data;
+								const { token, refreshToken } = response.data;
 
 								setCookie(ctx, 'token', token, {
 									maxAge: 60 * 60 * 24 * 30,

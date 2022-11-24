@@ -27,15 +27,19 @@ export const dark = extendTheme({
 		lg: '31.25rem', // 500px
 		xl: '37.5rem', // 600px
 		'2xl': '43.75rem', // 700px
+		'3xl': '50rem', // 800px
 	},
 	fonts: {
 		body: 'Roboto, system-ui, sans-serif',
 		heading: 'Roboto , system-ui, sans-serif',
 	},
 	fontSizes: {
-		small: '0.625rem', // 10px
-		medium: '0.75rem', // 12px
-		large: '0.875rem', // 14px
+		h1: '3rem', //48px
+		h2: '2.5rem', //40px
+		h3: '2rem', //32px
+		h4: '1.5rem', //24px
+		h5: '1.25rem', //20px
+		h6: '1rem', //16px
 	},
 
 	fontWeights: {

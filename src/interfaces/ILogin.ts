@@ -3,6 +3,12 @@ export interface ILogin {
 	password: string;
 }
 
+export interface ICreateAccount {
+	name: string;
+	email: string;
+	password: string;
+}
+
 export interface IUserInfo {
 	name: string;
 	token: string;

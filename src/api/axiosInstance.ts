@@ -18,6 +18,12 @@ export const login = async (credentials: ILogin) => {
 	return data;
 };
 
+export const createAccount = async (credentials: ILogin) => {
+	const { data } = await axiosInstance.post('/users', credentials);
+
+	return data;
+};
+
 export function setHeadersToken(token: string) {
 	// @ts-ignore
 	axiosInstance.defaults.headers.Authorization = `Bearer ${token}`;

@@ -11,18 +11,19 @@ import { FieldError } from 'react-hook-form';
 interface InputProps extends ChakraInputProps {
 	name: string;
 	label?: string;
+	labelColor?: string;
 	error?: FieldError;
 }
 
 const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
-	{ name, label, error, ...rest },
+	{ name, label, labelColor = 'white', error, ...rest },
 	ref: any,
 ) => {
 	return (
 		// !!errors significa que se tiver conteúdo é true, transformando em booleano
 		<FormControl isInvalid={!!error}>
 			{label && (
-				<FormLabel color="white" htmlFor={name}>
+				<FormLabel color={labelColor} htmlFor={name}>
 					{label}
 				</FormLabel>
 			)}
@@ -38,6 +39,9 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
 				}}
 				_hover={{
 					filter: 'brightness(0.9)',
+				}}
+				_placeholder={{
+					color: 'gray.300',
 				}}
 				size="lg"
 				ref={ref}

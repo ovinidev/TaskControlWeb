@@ -3,18 +3,18 @@ import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { Input } from '../components/Form/Input';
 import { useAuth } from '../hooks/useAuth';
-import { ILogin } from '../interfaces/ILogin';
+import { ICreateAccount, ILogin } from '../interfaces/ILogin';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../validations/loginSchema';
 import { ButtonSubmit } from '../components/Form/ButtonSubmit';
 import { useToasts } from '../hooks/useToasts';
-import { useRouter } from 'next/router';
+import { createAccount } from '../api/axiosInstance';
 import { FormContainer } from '../components/Form/FormContainer';
 import { Title } from '../components/Title';
-import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
+import { GetServerSideProps } from 'next';
 
-export default function Login() {
+export default function SignIn() {
 	const { signIn } = useAuth();
 
 	const { handleErrorToast } = useToasts();
@@ -23,33 +23,38 @@ export default function Login() {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<ILogin>({ resolver: yupResolver(loginSchema) });
+	} = useForm<ICreateAccount>({ resolver: yupResolver(loginSchema) });
 
-	const { isLoading, mutateAsync } = useMutation(async (data: ILogin) => {
-		try {
-			await signIn(data);
-		} catch (err: any) {
-			handleErrorToast({ title: 'Erro no login', description: err.message });
-		}
-	});
+	const { isLoading, mutateAsync } = useMutation(
+		async (data: ICreateAccount) => {
+			try {
+				await createAccount(data);
+			} catch (err: any) {
+				handleErrorToast({
+					title: 'Erro ao criar conta',
+					description: err.message,
+				});
+			}
+		},
+	);
 
-	const onSubmit = async (data: ILogin) => {
+	const onSubmit = async (data: ICreateAccount) => {
 		await mutateAsync(data);
+		await signIn({ email: data.email, password: data.password });
 	};
 
-	const route = useRouter();
-
 	return (
-		<Flex
-			bg="primary"
-			h="100vh"
-			align="center"
-			justify="center"
-			direction="column"
-		>
-			<Title mb="3rem">Olá, seja bem vindo</Title>
+		<Flex h="100vh" align="center" justify="center" direction="column">
+			<Title mb="3rem">Crie sua conta</Title>
 			<FormContainer onSubmit={handleSubmit(onSubmit)}>
 				<Stack w="100%" spacing="6">
+					<Input
+						type="text"
+						label="Nome"
+						{...register('name')}
+						error={errors.email}
+						placeholder="Vinicius"
+					/>
 					<Input
 						type="email"
 						label="Email"
@@ -64,16 +69,8 @@ export default function Login() {
 						error={errors.password}
 						placeholder="********"
 					/>
-					<Flex justify="space-between">
-						<ButtonSubmit isLoading={isLoading} title="Login" w="49%" />
-						<ButtonSubmit
-							type="button"
-							onClick={() => route.push('signIn')}
-							bg="tertiary"
-							title="Criar conta"
-							w="49%"
-						/>
-					</Flex>
+
+					<ButtonSubmit isLoading={isLoading} title="Criar conta" />
 				</Stack>
 			</FormContainer>
 		</Flex>

@@ -36,7 +36,8 @@ export default function App({ Component, pageProps }: AppProps) {
 					onClick={handleTheme}
 					size="lg"
 					position="absolute"
-					right="1"
+					right="2rem"
+					top="2rem"
 				/>
 				<AuthProvider>
 					<Component {...pageProps} />
