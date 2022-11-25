@@ -15,3 +15,10 @@ export interface ICreateTask {
 	hours: number;
 	date: Date;
 }
+
+export interface IUpdateTask {
+	date?: Date;
+	description?: string;
+	hours?: number;
+	name?: string;
+}

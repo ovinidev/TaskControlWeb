@@ -5,7 +5,7 @@ export const light = extendTheme({
 	colors: {
 		primary: 'linear-gradient(90deg, rgba(97,231,206,1) 0%, #293ACB 76%)',
 		secondary: '#61E7CE',
-		tertiary: '#8A9FFF ',
+		tertiary: '#D4D8F4 ',
 		title: '#0C0C0C',
 		text: '#0C0C0C',
 		gray: {

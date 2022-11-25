@@ -11,6 +11,7 @@ export interface ICreateAccount {
 
 export interface IUserInfo {
 	name: string;
+	avatarUrl: string;
 	token: string;
 	refreshToken: string;
 	isAuthenticated: boolean;

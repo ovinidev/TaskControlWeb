@@ -22,8 +22,6 @@ type AuthContextData = {
 
 const AuthContext = createContext({} as AuthContextData);
 
-// let authChannel: BroadcastChannel;
-
 export const AuthProvider = ({ children }: AuthContextProps) => {
 	const [accountInfo, setAccountInfo] = useState({} as IUserInfo);
 	const { push } = useRouter();
@@ -40,6 +38,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
 				token,
 				isAuthenticated: true,
 				name: user.name,
+				avatarUrl: user.avatarUrl,
 			});
 
 			localStorage.setItem(
@@ -49,6 +48,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
 					token,
 					isAuthenticated: true,
 					name: user.name,
+					avatarUrl: user.avatarUrl,
 				}),
 			);
 
@@ -75,6 +75,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
 			refreshToken: '',
 			token: '',
 			name: '',
+			avatarUrl: '',
 			isAuthenticated: false,
 		});
 
@@ -103,6 +104,8 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
 				maxAge: 60 * 60 * 24 * 30,
 				path: '/',
 			});
+		} else {
+			singOut();
 		}
 	}, []);
 

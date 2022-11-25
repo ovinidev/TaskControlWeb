@@ -1,4 +1,4 @@
-import { ICreateTask, ITask } from '../interfaces/ITask';
+import { ICreateTask, ITask, IUpdateTask } from '../interfaces/ITask';
 import { axiosInstance } from './axiosInstance';
 
 export const getUserTasks = async () => {
@@ -9,6 +9,12 @@ export const getUserTasks = async () => {
 
 export const createTask = async (task: ICreateTask) => {
 	const { data } = await axiosInstance.post(`/tasks`, task);
+
+	return data;
+};
+
+export const editTask = async (task: IUpdateTask, taskId: string) => {
+	const { data } = await axiosInstance.patch(`/tasks/me/${taskId}`, task);
 
 	return data;
 };

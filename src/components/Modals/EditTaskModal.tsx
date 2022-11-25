@@ -7,18 +7,15 @@ import {
 	ModalBody,
 	ModalCloseButton,
 	Stack,
-	Button,
 	Heading,
 } from '@chakra-ui/react';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { createTask } from '../../api/task';
+import { date } from 'yup';
+import { editTask } from '../../api/task';
 import { useToasts } from '../../hooks/useToasts';
-import { ICreateTask } from '../../interfaces/ITask';
-import { loginSchema } from '../../validations/loginSchema';
-import { taskSchema } from '../../validations/taskSchema';
+import { IUpdateTask } from '../../interfaces/ITask';
 import { ButtonSubmit } from '../Form/ButtonSubmit';
 import { FormContainer } from '../Form/FormContainer';
 import { Input } from '../Form/Input';
@@ -26,38 +23,54 @@ import { Input } from '../Form/Input';
 export interface AddTaskModal {
 	isOpen: boolean;
 	onClose: () => void;
+	taskId: string;
 }
 
-export const AddTaskModal = ({ isOpen, onClose }: AddTaskModal) => {
+export const EditTaskModal = ({ isOpen, onClose, taskId }: AddTaskModal) => {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 		reset,
-	} = useForm<ICreateTask>({ resolver: yupResolver(taskSchema) });
+	} = useForm<IUpdateTask>();
 
 	const router = useRouter();
 
 	const { handleSuccessToast, handleErrorToast } = useToasts();
 
-	const { isLoading, mutateAsync } = useMutation(async (data: ICreateTask) => {
+	const { isLoading, mutateAsync } = useMutation(async (data: IUpdateTask) => {
 		try {
-			await createTask(data);
-			handleSuccessToast({ title: 'Tarefa criada com sucesso' });
+			const taskToEdit = {
+				date:
+					data.date !== undefined && data.date.toString() !== ''
+						? new Date(data.date)
+						: undefined,
+				description:
+					data.description !== undefined && data.description.length > 0
+						? data.description
+						: undefined,
+				hours:
+					data.hours !== undefined && data.hours > 0 ? data.hours : undefined,
+				name:
+					data.name !== undefined && data.name.length > 0
+						? data.name
+						: undefined,
+			};
+
+			await editTask(taskToEdit, taskId);
+			handleSuccessToast({ title: 'Tarefa editada com sucesso' });
 			reset();
 			onClose();
 			router.replace(router.asPath);
 		} catch (err: any) {
 			handleErrorToast({
-				title: 'Erro ao criar task',
+				title: 'Erro ao editar task',
 				description: err.message,
 			});
 		}
 	});
 
-	const onSubmit = async (data: ICreateTask) => {
-		console.log(data);
-
+	const onSubmit = async (data: IUpdateTask) => {
 		await mutateAsync({
 			date: data.date,
 			description: data.description,
@@ -73,7 +86,7 @@ export const AddTaskModal = ({ isOpen, onClose }: AddTaskModal) => {
 				<ModalContent bg="white" px="4">
 					<ModalHeader>
 						<Heading as="h4" variant="h4" color="black" py="2">
-							Adicionar task
+							Editar task
 						</Heading>
 					</ModalHeader>
 					<ModalCloseButton size="lg" />
@@ -125,7 +138,7 @@ export const AddTaskModal = ({ isOpen, onClose }: AddTaskModal) => {
 									labelColor={'black'}
 								/>
 								<ButtonSubmit
-									title="Criar"
+									title="Editar"
 									_hover={{ filter: 'brightness(0.8)' }}
 									h="3rem"
 									color="white"

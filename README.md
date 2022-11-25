@@ -1,34 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Task Control
 
-## Getting Started
+<p align="center">
+  
+<h4>
+  Aplicação fullstack desenvolvida por mim
+</h4>
 
-First, run the development server:
+## 💡 Tecnologias
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Tecnologias utilizada no projeto:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<img src="https://camo.githubusercontent.com/92ec9eb7eeab7db4f5919e3205918918c42e6772562afb4112a2909c1aaaa875/68747470733a2f2f6173736574732e76657263656c2e636f6d2f696d6167652f75706c6f61642f76313630373535343338352f7265706f7369746f726965732f6e6578742d6a732f6e6578742d6c6f676f2e706e67" width="57">
+&nbsp;
+<img src="https://cdn.iconscout.com/icon/free/png-512/typescript-1174965.png" alt="imagem" width="60">
+&nbsp; 
+<img src="https://avatars.githubusercontent.com/u/54212428?s=280&v=4" alt="imagem" width="60">
+&nbsp;
+<img src="https://camo.githubusercontent.com/2cd3571ea5b29a8640a44095d09671d9d350746b8c35407781b2508533b6f2c4/68747470733a2f2f7365656b6c6f676f2e636f6d2f696d616765732f522f72656163742d71756572792d6c6f676f2d313334304541344345392d7365656b6c6f676f2e636f6d2e706e67" alt="imagem" width="63">
+&nbsp;
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## 💻 Projeto
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- O projeto consiste em adicionar tasks que foram finalizadas durante o dia do
+  dev. O usuário poderá adicionar todas as tasks feitas por ele.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- O usuário poderá criar e logar com sua conta.
 
-## Learn More
+- O usuário poderá criar, editar e adicionar novas tasks.
 
-To learn more about Next.js, take a look at the following resources:
+<!-- ## 🔍 Layout
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Você pode visualizar a funcionalidade do projeto através do
+[link](https://dt-money-ignite-vini.vercel.app/). -->
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 🚀 Como executar
 
-## Deploy on Vercel
+- Clone o repositório
+- Instale as dependências com `yarn`
+- Inicie o servidor com `yarn dev`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Agora você pode acessar [`localhost:3000`](http://localhost:3000) do seu
+navegador.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<div>
+  <img align="left" src="https://avatars.githubusercontent.com/u/62653539?v=4" width=35 alt="Profile"/>
+  <sub>Made with 💜 by <a href="https://github.com/ovinidev">Vinícius Medeiros</a></sub>
+</div>
