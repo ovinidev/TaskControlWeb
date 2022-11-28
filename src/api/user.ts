@@ -6,3 +6,9 @@ export const editUserProfile = async (photo: FormData) => {
 
 	return data;
 };
+
+export const getUserData = async () => {
+	const { data } = await axiosInstance.get('users/me');
+
+	return data;
+};

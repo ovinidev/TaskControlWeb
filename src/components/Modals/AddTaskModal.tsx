@@ -56,8 +56,6 @@ export const AddTaskModal = ({ isOpen, onClose }: AddTaskModal) => {
 	});
 
 	const onSubmit = async (data: ICreateTask) => {
-		console.log(data);
-
 		await mutateAsync({
 			date: data.date,
 			description: data.description,

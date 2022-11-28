@@ -22,7 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
 	const handleTheme = () => {
 		setTheme(theme === light ? dark : light);
-		setCookie(null, 'themes', theme === light ? 'dark' : 'light', {
+		setCookie(undefined, 'themes', theme === light ? 'dark' : 'light', {
 			maxAge: 60 * 60 * 24 * 30,
 			path: '/',
 		});

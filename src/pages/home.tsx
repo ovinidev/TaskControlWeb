@@ -1,4 +1,4 @@
-import { Avatar, Button, Flex, HStack, Input, Stack } from '@chakra-ui/react';
+import { Button, Flex, HStack, Stack } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
 import { requestsWithSSR } from '../api';
@@ -9,14 +9,18 @@ import { deleteTask } from '../api/task';
 import { useRouter } from 'next/router';
 import { useToasts } from '../hooks/useToasts';
 import { AddTaskModal } from '../components/Modals/AddTaskModal';
-import { useAuth } from '../hooks/useAuth';
 import { TaskItem } from '../components/Task/TaskItem';
 import { EditTaskModal } from '../components/Modals/EditTaskModal';
 import { useReducer, useState } from 'react';
 import { editUserProfile } from '../api/user';
+import { IUser } from '../interfaces/IUser';
+import { Avatar } from '../components/User/Avatar';
 
 interface Props {
-	tasks: ITask[];
+	data: {
+		tasks: ITask[];
+	};
+	user: IUser;
 }
 
 interface State {
@@ -37,7 +41,6 @@ export interface Action {
 export default function Home(props: Props) {
 	const router = useRouter();
 	const { handleErrorToast } = useToasts();
-	const { accountInfo } = useAuth();
 	const [taskId, setTaskId] = useState('');
 
 	const handleDeleteTask = async (taskId: string) => {
@@ -55,12 +58,11 @@ export default function Home(props: Props) {
 	};
 
 	const handleEditPhoto = async (photo: File[]) => {
-		console.log(photo);
-
 		const formData = new FormData();
 		formData.append('image', photo[0]);
 
-		editUserProfile(formData);
+		await editUserProfile(formData);
+		router.replace(router.asPath);
 	};
 
 	const initialState = {
@@ -95,24 +97,10 @@ export default function Home(props: Props) {
 		<Flex direction="column" px={{ base: '8', '3xl': 0 }}>
 			<title>Home</title>
 			<HStack spacing="4" py="8" justify="center" align="center">
-				<Avatar
-					name={accountInfo.name}
-					size="xl"
-					src={`http://localhost:3333/uploads/${accountInfo.avatarUrl}`}
-					position="relative"
-				>
-					<Input
-						max="3"
-						w="1rem"
-						position="absolute"
-						type="file"
-						accept="image/*"
-						onChange={(e: any) => handleEditPhoto(e.target.files)}
-					/>
-				</Avatar>
+				<Avatar handleEditPhoto={handleEditPhoto} userData={props.user} />
 
 				<Flex direction="column">
-					<Title>Olá {accountInfo.name},</Title>
+					<Title>Olá {props.user.name},</Title>
 					<Title>visualize suas tasks</Title>
 				</Flex>
 				<Button
@@ -126,7 +114,7 @@ export default function Home(props: Props) {
 				</Button>
 			</HStack>
 			<Stack align="center" spacing="4">
-				{props.tasks.map((task) => {
+				{props.data.tasks.map((task) => {
 					return (
 						<TaskItem
 							handleDeleteTask={() => handleDeleteTask(task.id)}
@@ -164,8 +152,9 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
 	const axiosInstanceSSR = requestsWithSSR(ctx);
 	const { data } = await axiosInstanceSSR.get<ITask[]>('/tasks/me');
+	const { data: user } = await axiosInstanceSSR.get<ITask>('/users/me');
 
 	return {
-		props: data,
+		props: { data, user },
 	};
 };
