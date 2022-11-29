@@ -7,7 +7,6 @@ import {
 	ModalBody,
 	ModalCloseButton,
 	Stack,
-	Button,
 	Heading,
 } from '@chakra-ui/react';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -17,7 +16,6 @@ import { useForm } from 'react-hook-form';
 import { createTask } from '../../api/task';
 import { useToasts } from '../../hooks/useToasts';
 import { ICreateTask } from '../../interfaces/ITask';
-import { loginSchema } from '../../validations/loginSchema';
 import { taskSchema } from '../../validations/taskSchema';
 import { ButtonSubmit } from '../Form/ButtonSubmit';
 import { FormContainer } from '../Form/FormContainer';
@@ -56,12 +54,27 @@ export const AddTaskModal = ({ isOpen, onClose }: AddTaskModal) => {
 	});
 
 	const onSubmit = async (data: ICreateTask) => {
+		const date = data.date.toString();
+		const [year, month, day] = date.split('-');
+
 		await mutateAsync({
-			date: data.date,
+			date: new Date(`${month}/${day}/${year}`),
 			description: data.description,
 			hours: Number(data.hours),
 			name: data.name,
 		});
+	};
+
+	const takeActualDate = () => {
+		const date = new Date();
+
+		const day = date.getDate();
+		const month = date.getMonth() + 1;
+		const year = date.getFullYear();
+
+		const actualDate = `${year}-${month}-${day}`;
+
+		return actualDate;
 	};
 
 	return (
@@ -115,6 +128,7 @@ export const AddTaskModal = ({ isOpen, onClose }: AddTaskModal) => {
 								<Input
 									type="date"
 									label="Data"
+									max={takeActualDate()}
 									{...register('date')}
 									error={errors.date}
 									placeholder="14/04/2002"

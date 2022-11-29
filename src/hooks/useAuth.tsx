@@ -1,14 +1,8 @@
-import {
-	createContext,
-	ReactNode,
-	useContext,
-	useEffect,
-	useState,
-} from 'react';
-import { login, setHeadersToken } from '../api/axiosInstance';
+import { createContext, ReactNode, useContext, useState } from 'react';
 import { ILogin, IUserInfo } from '../interfaces/ILogin';
-import { setCookie, parseCookies, destroyCookie } from 'nookies';
+import { setCookie, destroyCookie } from 'nookies';
 import { useRouter } from 'next/router';
+import { login, setHeadersToken } from '../api/login';
 
 type AuthContextProps = {
 	children: ReactNode;

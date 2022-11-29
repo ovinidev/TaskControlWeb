@@ -12,7 +12,6 @@ import {
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { date } from 'yup';
 import { editTask } from '../../api/task';
 import { useToasts } from '../../hooks/useToasts';
 import { IUpdateTask } from '../../interfaces/ITask';
@@ -71,8 +70,11 @@ export const EditTaskModal = ({ isOpen, onClose, taskId }: AddTaskModal) => {
 	});
 
 	const onSubmit = async (data: IUpdateTask) => {
+		const date = data?.date?.toString();
+		const [year, month, day] = date!.split('-');
+
 		await mutateAsync({
-			date: data.date,
+			date: data.date && new Date(`${month}/${day}/${year}`),
 			description: data.description,
 			hours: Number(data.hours),
 			name: data.name,

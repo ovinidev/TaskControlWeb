@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import axios, { AxiosError } from 'axios';
-import { parseCookies, setCookie, destroyCookie } from 'nookies';
+import { parseCookies, setCookie } from 'nookies';
 import { GetServerSidePropsContext } from 'next';
 import { AuthTokenError } from '../errors/AuthTokenError';
 
