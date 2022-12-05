@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import axios, { AxiosError } from 'axios';
 import { parseCookies, setCookie } from 'nookies';
 import { GetServerSidePropsContext } from 'next';
@@ -35,6 +34,7 @@ export function requestsWithSSR(ctx: GetServerSidePropsContext) {
 							})
 							.then((response) => {
 								const { token, refreshToken } = response.data;
+								console.log(token, refreshToken);
 
 								setCookie(ctx, 'token', token, {
 									maxAge: 60 * 60 * 24 * 30,

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { ILogin } from '../interfaces/ILogin';
 import { axiosInstance } from './axiosInstance';
 

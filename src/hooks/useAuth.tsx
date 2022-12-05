@@ -1,8 +1,9 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 import { ILogin, IUserInfo } from '../interfaces/ILogin';
-import { setCookie, destroyCookie } from 'nookies';
+import { setCookie, destroyCookie, parseCookies } from 'nookies';
 import { useRouter } from 'next/router';
 import { login, setHeadersToken } from '../api/login';
+import { useEffect } from 'react';
 
 type AuthContextProps = {
 	children: ReactNode;
@@ -67,6 +68,15 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
 
 		push('/');
 	}
+
+	useEffect(() => {
+		const { token, refreshToken } = parseCookies();
+
+		if (!token || !refreshToken) {
+			destroyCookie(undefined, 'token');
+			destroyCookie(undefined, 'refreshToken');
+		}
+	}, []);
 
 	return (
 		<AuthContext.Provider

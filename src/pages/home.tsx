@@ -139,9 +139,9 @@ export default function Home(props: Props) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-	const { token } = parseCookies(ctx);
+	const { token, refreshToken } = parseCookies(ctx);
 
-	if (!token) {
+	if (!token || !refreshToken) {
 		return {
 			redirect: {
 				destination: '/',

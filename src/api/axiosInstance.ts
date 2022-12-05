@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import axios from 'axios';
 import { parseCookies } from 'nookies';
 

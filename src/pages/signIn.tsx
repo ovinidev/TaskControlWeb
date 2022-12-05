@@ -1,18 +1,18 @@
-import { Button, Flex, Heading, Stack } from '@chakra-ui/react';
+import { Flex, Stack } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { Input } from '../components/Form/Input';
 import { useAuth } from '../hooks/useAuth';
-import { ICreateAccount, ILogin } from '../interfaces/ILogin';
+import { ICreateAccount } from '../interfaces/ILogin';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../validations/loginSchema';
 import { ButtonSubmit } from '../components/Form/ButtonSubmit';
 import { useToasts } from '../hooks/useToasts';
-import { createAccount } from '../api/axiosInstance';
 import { FormContainer } from '../components/Form/FormContainer';
 import { Title } from '../components/Title';
 import { parseCookies } from 'nookies';
 import { GetServerSideProps } from 'next';
+import { createAccount } from '../api/user';
 
 export default function SignIn() {
 	const { signIn } = useAuth();
@@ -78,9 +78,9 @@ export default function SignIn() {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-	const { token } = parseCookies(ctx);
+	const { token, refreshToken } = parseCookies(ctx);
 
-	if (token) {
+	if (token && refreshToken) {
 		return {
 			redirect: {
 				destination: '/home',
