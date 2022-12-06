@@ -7,6 +7,12 @@ export const getUserTasks = async () => {
 	return data;
 };
 
+export const getTaskById = async (id: string) => {
+	const { data } = await axiosInstance.get<ITask[]>(`/tasks/me/${id}`);
+
+	return data;
+};
+
 export const createTask = async (task: ICreateTask) => {
 	const { data } = await axiosInstance.post(`/tasks`, task);
 

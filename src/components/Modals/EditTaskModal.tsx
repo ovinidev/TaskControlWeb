@@ -69,6 +69,20 @@ export const EditTaskModal = ({ isOpen, onClose, taskId }: AddTaskModal) => {
 		}
 	});
 
+	const takeActualDate = () => {
+		const date = new Date();
+
+		const day = `${0}${date.getDate()}`.slice(-2);
+		const month = date.getMonth() + 1;
+		const year = date.getFullYear();
+
+		const actualDate = `${year}-${month}-${day}`;
+
+		console.log(actualDate);
+
+		return actualDate;
+	};
+
 	const onSubmit = async (data: IUpdateTask) => {
 		const date = data?.date?.toString();
 		const [year, month, day] = date!.split('-');
@@ -138,6 +152,7 @@ export const EditTaskModal = ({ isOpen, onClose, taskId }: AddTaskModal) => {
 									_placeholder={{ color: 'gray.300' }}
 									color="black"
 									labelColor={'black'}
+									max={takeActualDate()}
 								/>
 								<ButtonSubmit
 									title="Editar"

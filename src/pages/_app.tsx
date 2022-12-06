@@ -2,12 +2,13 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClientProvider } from '@tanstack/react-query';
 import type { AppProps } from 'next/app';
 import { Switcher } from '../components/Switcher';
-import { queryClint } from '../services/queryClient';
+import { queryClient } from '../services/queryClient';
 import { dark } from '../styles/dark';
 import { light } from '../styles/light';
 import { parseCookies, setCookie } from 'nookies';
 import { useState } from 'react';
 import { AuthProvider } from '../hooks/useAuth';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 export default function App({ Component, pageProps }: AppProps) {
 	const { themes } = parseCookies();
@@ -29,7 +30,8 @@ export default function App({ Component, pageProps }: AppProps) {
 	};
 
 	return (
-		<QueryClientProvider client={queryClint}>
+		<QueryClientProvider client={queryClient}>
+			<ReactQueryDevtools />
 			<ChakraProvider theme={theme}>
 				<Switcher
 					handleTheme={handleTheme}

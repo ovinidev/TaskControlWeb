@@ -5,7 +5,7 @@ import { requestsWithSSR } from '../api';
 import { Title } from '../components/Title';
 import { ITask } from '../interfaces/ITask';
 import { AddIcon } from '@chakra-ui/icons';
-import { deleteTask } from '../api/task';
+import { deleteTask, getTaskById } from '../api/task';
 import { useRouter } from 'next/router';
 import { useToasts } from '../hooks/useToasts';
 import { AddTaskModal } from '../components/Modals/AddTaskModal';
@@ -15,6 +15,7 @@ import { useReducer, useState } from 'react';
 import { editUserProfile } from '../api/user';
 import { IUser } from '../interfaces/IUser';
 import { Avatar } from '../components/User/Avatar';
+import { queryClient } from '../services/queryClient';
 
 interface Props {
 	data: {
@@ -63,6 +64,20 @@ export default function Home(props: Props) {
 
 		await editUserProfile(formData);
 		router.replace(router.asPath);
+	};
+
+	const handlePrefetchTask = async (taskId: string) => {
+		return await queryClient.prefetchQuery(
+			['task', { id: taskId }],
+			async () => {
+				const response = await getTaskById(taskId);
+
+				return response;
+			},
+			{
+				staleTime: 1000 * 60 * 10, // 10 minutos
+			},
+		);
 	};
 
 	const initialState = {
@@ -117,6 +132,8 @@ export default function Home(props: Props) {
 				{props.data.tasks.map((task) => {
 					return (
 						<TaskItem
+							onClick={() => router.push(task.id)}
+							onHover={() => handlePrefetchTask(task.id)}
 							handleDeleteTask={() => handleDeleteTask(task.id)}
 							handleEditTask={() => handleEditTask(task.id)}
 							task={task}

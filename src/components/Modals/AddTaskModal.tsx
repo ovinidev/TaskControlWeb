@@ -68,11 +68,13 @@ export const AddTaskModal = ({ isOpen, onClose }: AddTaskModal) => {
 	const takeActualDate = () => {
 		const date = new Date();
 
-		const day = date.getDate();
+		const day = `${0}${date.getDate()}`.slice(-2);
 		const month = date.getMonth() + 1;
 		const year = date.getFullYear();
 
 		const actualDate = `${year}-${month}-${day}`;
+
+		console.log(actualDate);
 
 		return actualDate;
 	};
