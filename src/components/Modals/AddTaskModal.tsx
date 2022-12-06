@@ -9,7 +9,7 @@ import {
 	Stack,
 	Heading,
 } from '@chakra-ui/react';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
@@ -32,7 +32,7 @@ export const AddTaskModal = ({ isOpen, onClose }: AddTaskModal) => {
 		handleSubmit,
 		formState: { errors },
 		reset,
-	} = useForm<ICreateTask>({ resolver: yupResolver(taskSchema) });
+	} = useForm<ICreateTask>({ resolver: zodResolver(taskSchema) });
 
 	const router = useRouter();
 
@@ -73,8 +73,6 @@ export const AddTaskModal = ({ isOpen, onClose }: AddTaskModal) => {
 		const year = date.getFullYear();
 
 		const actualDate = `${year}-${month}-${day}`;
-
-		console.log(actualDate);
 
 		return actualDate;
 	};

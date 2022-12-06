@@ -73,8 +73,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
 		const { token, refreshToken } = parseCookies();
 
 		if (!token || !refreshToken) {
-			destroyCookie(undefined, 'token');
-			destroyCookie(undefined, 'refreshToken');
+			singOut();
 		}
 	}, []);
 

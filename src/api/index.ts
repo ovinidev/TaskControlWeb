@@ -34,7 +34,6 @@ export function requestsWithSSR(ctx: GetServerSidePropsContext) {
 							})
 							.then((response) => {
 								const { token, refreshToken } = response.data;
-								console.log(token, refreshToken);
 
 								setCookie(ctx, 'token', token, {
 									maxAge: 60 * 60 * 24 * 30,

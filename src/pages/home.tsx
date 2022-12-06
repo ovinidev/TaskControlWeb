@@ -16,6 +16,7 @@ import { editUserProfile } from '../api/user';
 import { IUser } from '../interfaces/IUser';
 import { Avatar } from '../components/User/Avatar';
 import { queryClient } from '../services/queryClient';
+import { useAuth } from '../hooks/useAuth';
 
 interface Props {
 	data: {
@@ -43,6 +44,7 @@ export default function Home(props: Props) {
 	const router = useRouter();
 	const { handleErrorToast } = useToasts();
 	const [taskId, setTaskId] = useState('');
+	const { singOut } = useAuth();
 
 	const handleDeleteTask = async (taskId: string) => {
 		try {
@@ -111,6 +113,9 @@ export default function Home(props: Props) {
 	return (
 		<Flex direction="column" px={{ base: '8', '3xl': 0 }}>
 			<title>Home</title>
+			<Button w="2rem" onClick={singOut}>
+				Logout
+			</Button>
 			<HStack spacing="4" py="8" justify="center" align="center">
 				<Avatar handleEditPhoto={handleEditPhoto} userData={props.user} />
 

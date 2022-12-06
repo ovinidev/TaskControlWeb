@@ -78,8 +78,6 @@ export const EditTaskModal = ({ isOpen, onClose, taskId }: AddTaskModal) => {
 
 		const actualDate = `${year}-${month}-${day}`;
 
-		console.log(actualDate);
-
 		return actualDate;
 	};
 

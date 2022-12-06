@@ -1,10 +1,8 @@
-import * as yup from 'yup';
+import { z } from 'zod';
 
-export const taskSchema = yup
-	.object({
-		name: yup.string().required('Digite um nome para a task'),
-		description: yup.string().required('Digite uma descrição'),
-		hours: yup.string().required('Digite as horas gastas'),
-		date: yup.string().required('Digite uma data'),
-	})
-	.required();
+export const taskSchema = z.object({
+	name: z.string().min(1, { message: 'Digite o nome da Task' }),
+	description: z.string().min(1, { message: 'Digite uma descrição' }),
+	hours: z.string().min(1, { message: 'Digite a quantidade de horas' }),
+	date: z.string().min(1, { message: 'Digite a data' }),
+});

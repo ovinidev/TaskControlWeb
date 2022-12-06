@@ -1,10 +1,9 @@
-import { Button, Flex, Heading, Stack } from '@chakra-ui/react';
+import { Flex, Stack } from '@chakra-ui/react';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { Input } from '../components/Form/Input';
 import { useAuth } from '../hooks/useAuth';
 import { ILogin } from '../interfaces/ILogin';
-import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '../validations/loginSchema';
 import { ButtonSubmit } from '../components/Form/ButtonSubmit';
 import { useToasts } from '../hooks/useToasts';
@@ -13,6 +12,7 @@ import { FormContainer } from '../components/Form/FormContainer';
 import { Title } from '../components/Title';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function Login() {
 	const { signIn } = useAuth();
@@ -23,7 +23,7 @@ export default function Login() {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<ILogin>({ resolver: yupResolver(loginSchema) });
+	} = useForm<ILogin>({ resolver: zodResolver(loginSchema) });
 
 	const { isLoading, mutateAsync } = useMutation(async (data: ILogin) => {
 		try {

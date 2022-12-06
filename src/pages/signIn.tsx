@@ -4,8 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Input } from '../components/Form/Input';
 import { useAuth } from '../hooks/useAuth';
 import { ICreateAccount } from '../interfaces/ILogin';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { loginSchema } from '../validations/loginSchema';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { ButtonSubmit } from '../components/Form/ButtonSubmit';
 import { useToasts } from '../hooks/useToasts';
 import { FormContainer } from '../components/Form/FormContainer';
@@ -13,6 +12,7 @@ import { Title } from '../components/Title';
 import { parseCookies } from 'nookies';
 import { GetServerSideProps } from 'next';
 import { createAccount } from '../api/user';
+import { createAccountSchema } from '../validations/createAccountSchema';
 
 export default function SignIn() {
 	const { signIn } = useAuth();
@@ -23,7 +23,7 @@ export default function SignIn() {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<ICreateAccount>({ resolver: yupResolver(loginSchema) });
+	} = useForm<ICreateAccount>({ resolver: zodResolver(createAccountSchema) });
 
 	const { isLoading, mutateAsync } = useMutation(
 		async (data: ICreateAccount) => {
@@ -52,7 +52,7 @@ export default function SignIn() {
 						type="text"
 						label="Nome"
 						{...register('name')}
-						error={errors.email}
+						error={errors.name}
 						placeholder="Vinicius"
 					/>
 					<Input

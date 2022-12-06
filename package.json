@@ -26,7 +26,8 @@
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"typescript": "4.9.3",
-		"yup": "^0.32.11"
+		"yup": "^0.32.11",
+		"zod": "^3.19.1"
 	},
 	"devDependencies": {
 		"@typescript-eslint/eslint-plugin": "^5.44.0",
