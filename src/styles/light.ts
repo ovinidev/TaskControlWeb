@@ -16,9 +16,9 @@ export const light = extendTheme({
 			100: ' #FAFAFA',
 			0: '#FFFFFF',
 		},
-		white: '#FFFFFF',
+		white: '#F1F4F8',
 		black: '#000000',
-		toggleWhite: '#F0F3F8',
+		toggleWhite: '#000000',
 		inputBg: 'rgb(0, 0, 0, 0.1)',
 	},
 	breakpoints: {
@@ -99,7 +99,18 @@ export const light = extendTheme({
 	styles: {
 		global: {
 			body: {
-				bg: 'primary',
+				bg: 'white',
+
+				'&::-webkit-scrollbar': {
+					width: '10px',
+				},
+				'&::-webkit-scrollbar-track': {
+					width: '6px',
+				},
+				'&::-webkit-scrollbar-thumb': {
+					background: '#08113B',
+					borderRadius: '4px',
+				},
 			},
 		},
 	},

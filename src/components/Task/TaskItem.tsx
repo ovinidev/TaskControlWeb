@@ -18,7 +18,14 @@ export const TaskItem = ({
 	onClick,
 }: TaskItemProps) => {
 	return (
-		<Flex>
+		<Flex
+			css={{
+				'&:last-child': {
+					marginBottom: '4rem',
+				},
+			}}
+			color="black"
+		>
 			<Flex
 				onMouseEnter={onHover}
 				key={task.id}
@@ -30,12 +37,6 @@ export const TaskItem = ({
 				fontSize="1.2rem"
 				align="center"
 				justify="space-between"
-				css={{
-					'&:last-child': {
-						marginBottom: '4rem',
-					},
-				}}
-				color="black"
 			>
 				<Flex direction="column">
 					<Text>Task: {task.name}</Text>
@@ -46,7 +47,6 @@ export const TaskItem = ({
 				<HStack spacing="0">
 					<Button
 						h="2rem"
-						color="black"
 						_hover={{ color: 'gray.600' }}
 						transition="all 0.6s"
 						variant="unstyled"
@@ -55,7 +55,6 @@ export const TaskItem = ({
 						<DeleteIcon fontSize="1.7rem" />
 					</Button>
 					<Button
-						color="black"
 						h="2rem"
 						_hover={{ color: 'gray.600' }}
 						transition="all 0.6s"
@@ -73,11 +72,11 @@ export const TaskItem = ({
 					filter: 'brightness(0.9)',
 				}}
 				px="4"
-				bg="secondary"
+				bg="#7a93b3"
 				align="center"
 				borderRightRadius="5px"
 			>
-				<ArrowRightIcon color="black" />
+				<ArrowRightIcon />
 			</Flex>
 		</Flex>
 	);

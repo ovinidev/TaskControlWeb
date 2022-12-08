@@ -13,6 +13,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { editTask } from '../../api/task';
+import { useActualDate } from '../../hooks/useActualDate';
 import { useToasts } from '../../hooks/useToasts';
 import { IUpdateTask } from '../../interfaces/ITask';
 import { ButtonSubmit } from '../Form/ButtonSubmit';
@@ -37,30 +38,39 @@ export const EditTaskModal = ({ isOpen, onClose, taskId }: AddTaskModal) => {
 
 	const { handleSuccessToast, handleErrorToast } = useToasts();
 
+	const placeValuesToEdit = (data: IUpdateTask) => {
+		const valuesToEdit = {
+			date:
+				data.date !== undefined && data.date.toString() !== ''
+					? new Date(data.date)
+					: undefined,
+			description:
+				data.description !== undefined && data.description.length > 0
+					? data.description
+					: undefined,
+			hours:
+				data.hours !== undefined && data.hours > 0 ? data.hours : undefined,
+			name:
+				data.name !== undefined && data.name.length > 0 ? data.name : undefined,
+		};
+
+		return valuesToEdit;
+	};
+
+	const handleFinishRequest = () => {
+		reset();
+		onClose();
+		router.replace(router.asPath);
+	};
+
 	const { isLoading, mutateAsync } = useMutation(async (data: IUpdateTask) => {
 		try {
-			const taskToEdit = {
-				date:
-					data.date !== undefined && data.date.toString() !== ''
-						? new Date(data.date)
-						: undefined,
-				description:
-					data.description !== undefined && data.description.length > 0
-						? data.description
-						: undefined,
-				hours:
-					data.hours !== undefined && data.hours > 0 ? data.hours : undefined,
-				name:
-					data.name !== undefined && data.name.length > 0
-						? data.name
-						: undefined,
-			};
+			const taskToEdit = placeValuesToEdit(data);
 
 			await editTask(taskToEdit, taskId);
+
 			handleSuccessToast({ title: 'Tarefa editada com sucesso' });
-			reset();
-			onClose();
-			router.replace(router.asPath);
+			handleFinishRequest();
 		} catch (err: any) {
 			handleErrorToast({
 				title: 'Erro ao editar task',
@@ -69,17 +79,7 @@ export const EditTaskModal = ({ isOpen, onClose, taskId }: AddTaskModal) => {
 		}
 	});
 
-	const takeActualDate = () => {
-		const date = new Date();
-
-		const day = `${0}${date.getDate()}`.slice(-2);
-		const month = date.getMonth() + 1;
-		const year = date.getFullYear();
-
-		const actualDate = `${year}-${month}-${day}`;
-
-		return actualDate;
-	};
+	const { takeActualDate } = useActualDate();
 
 	const onSubmit = async (data: IUpdateTask) => {
 		const date = data?.date?.toString();

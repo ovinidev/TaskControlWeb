@@ -8,7 +8,7 @@ interface TitleProps extends HeadingProps {
 export const Title = ({ children, ...rest }: TitleProps) => {
 	return (
 		<Flex
-			color="white"
+			color="toggleWhite"
 			fontWeight={500}
 			as="h1"
 			fontSize={{ base: '2rem', md: '2.5rem', '2xl': 'h2' }}

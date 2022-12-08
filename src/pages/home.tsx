@@ -5,18 +5,15 @@ import { requestsWithSSR } from '../api';
 import { Title } from '../components/Title';
 import { ITask } from '../interfaces/ITask';
 import { AddIcon } from '@chakra-ui/icons';
-import { deleteTask, getTaskById } from '../api/task';
 import { useRouter } from 'next/router';
-import { useToasts } from '../hooks/useToasts';
 import { AddTaskModal } from '../components/Modals/AddTaskModal';
 import { TaskItem } from '../components/Task/TaskItem';
 import { EditTaskModal } from '../components/Modals/EditTaskModal';
-import { useReducer, useState } from 'react';
-import { editUserProfile } from '../api/user';
+
 import { IUser } from '../interfaces/IUser';
 import { Avatar } from '../components/User/Avatar';
-import { queryClient } from '../services/queryClient';
 import { useAuth } from '../hooks/useAuth';
+import { ModalAction, useHome } from '../hooks/useHome';
 
 interface Props {
 	data: {
@@ -25,90 +22,19 @@ interface Props {
 	user: IUser;
 }
 
-interface State {
-	modalAddTask: boolean;
-	modalEditTask: boolean;
-}
-
-export enum ModalAction {
-	ADD = 'add',
-	EDIT = 'edit',
-	CLOSE = 'close',
-}
-
-export interface Action {
-	type: ModalAction;
-}
-
 export default function Home(props: Props) {
-	const router = useRouter();
-	const { handleErrorToast } = useToasts();
-	const [taskId, setTaskId] = useState('');
 	const { singOut } = useAuth();
+	const router = useRouter();
 
-	const handleDeleteTask = async (taskId: string) => {
-		try {
-			await deleteTask(taskId);
-			router.replace(router.asPath);
-		} catch (err: any) {
-			handleErrorToast({ title: err.message });
-		}
-	};
-
-	const handleEditTask = (taskId: string) => {
-		setTaskId(taskId);
-		dispatch({ type: ModalAction.EDIT });
-	};
-
-	const handleEditPhoto = async (photo: File[]) => {
-		const formData = new FormData();
-		formData.append('image', photo[0]);
-
-		await editUserProfile(formData);
-		router.replace(router.asPath);
-	};
-
-	const handlePrefetchTask = async (taskId: string) => {
-		return await queryClient.prefetchQuery(
-			['task', { id: taskId }],
-			async () => {
-				const response = await getTaskById(taskId);
-
-				return response;
-			},
-			{
-				staleTime: 1000 * 60 * 10, // 10 minutos
-			},
-		);
-	};
-
-	const initialState = {
-		modalAddTask: false,
-		modalEditTask: false,
-	};
-
-	const [state, dispatch] = useReducer((state: State, action: Action) => {
-		switch (action.type) {
-			case ModalAction.ADD:
-				return {
-					modalAddTask: true,
-					modalEditTask: false,
-				};
-			case ModalAction.EDIT:
-				return {
-					modalAddTask: false,
-					modalEditTask: true,
-				};
-			case ModalAction.CLOSE:
-				return {
-					modalAddTask: initialState.modalAddTask,
-					modalEditTask: initialState.modalEditTask,
-				};
-
-			default:
-				return state;
-		}
-	}, initialState);
+	const {
+		handleEditPhoto,
+		dispatch,
+		handlePrefetchTask,
+		handleDeleteTask,
+		handleEditTask,
+		state,
+		taskId,
+	} = useHome();
 
 	return (
 		<Flex direction="column" px={{ base: '8', '3xl': 0 }}>
@@ -128,7 +54,7 @@ export default function Home(props: Props) {
 					transition="all 0.6s"
 					variant="unstyled"
 					onClick={() => dispatch({ type: ModalAction.ADD })}
-					color="white"
+					color="secondary"
 				>
 					<AddIcon fontSize="1.8rem" />
 				</Button>

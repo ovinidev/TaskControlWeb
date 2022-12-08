@@ -14,6 +14,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { createTask } from '../../api/task';
+import { useActualDate } from '../../hooks/useActualDate';
 import { useToasts } from '../../hooks/useToasts';
 import { ICreateTask } from '../../interfaces/ITask';
 import { taskSchema } from '../../validations/taskSchema';
@@ -33,6 +34,8 @@ export const AddTaskModal = ({ isOpen, onClose }: AddTaskModal) => {
 		formState: { errors },
 		reset,
 	} = useForm<ICreateTask>({ resolver: zodResolver(taskSchema) });
+
+	const { takeActualDate } = useActualDate();
 
 	const router = useRouter();
 
@@ -63,18 +66,6 @@ export const AddTaskModal = ({ isOpen, onClose }: AddTaskModal) => {
 			hours: Number(data.hours),
 			name: data.name,
 		});
-	};
-
-	const takeActualDate = () => {
-		const date = new Date();
-
-		const day = `${0}${date.getDate()}`.slice(-2);
-		const month = date.getMonth() + 1;
-		const year = date.getFullYear();
-
-		const actualDate = `${year}-${month}-${day}`;
-
-		return actualDate;
 	};
 
 	return (

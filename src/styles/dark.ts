@@ -18,7 +18,7 @@ export const dark = extendTheme({
 		},
 		white: '#FFFFFF',
 		black: '#000000',
-		toggleWhite: '#0B0B0B',
+		toggleWhite: '#FFFFFF',
 		inputBg: '#CCCCCC',
 	},
 	breakpoints: {
@@ -100,6 +100,16 @@ export const dark = extendTheme({
 		global: {
 			body: {
 				bg: 'primary',
+				'&::-webkit-scrollbar': {
+					width: '10px',
+				},
+				'&::-webkit-scrollbar-track': {
+					width: '6px',
+				},
+				'&::-webkit-scrollbar-thumb': {
+					background: 'secondary',
+					borderRadius: '4px',
+				},
 			},
 		},
 	},
