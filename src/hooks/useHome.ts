@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { Dispatch, useReducer, useState } from 'react';
+import { Dispatch, useCallback, useReducer, useState } from 'react';
 import { deleteTask, getTaskById } from '../api/task';
 import { editUserProfile } from '../api/user';
 import { queryClient } from '../services/queryClient';
@@ -27,35 +27,35 @@ interface UseHomeProps {
 	handleDeleteTask: (taskId: string) => Promise<void>;
 	handleEditTask: (taskId: string) => void;
 	state: State;
-	taskId: string;
+	currentTaskIdToEdit: string;
 }
 
 export const useHome = (): UseHomeProps => {
 	const router = useRouter();
 	const { handleErrorToast } = useToasts();
-	const [taskId, setTaskId] = useState('');
+	const [currentTaskIdToEdit, setCurrentTaskIdToEdit] = useState('');
 
-	const handleDeleteTask = async (taskId: string) => {
+	const handleDeleteTask = useCallback(async (taskId: string) => {
 		try {
 			await deleteTask(taskId);
 			router.replace(router.asPath);
 		} catch (err: any) {
 			handleErrorToast({ title: err.message });
 		}
-	};
+	}, []);
 
-	const handleEditTask = (taskId: string) => {
-		setTaskId(taskId);
+	const handleEditTask = useCallback((taskId: string) => {
+		setCurrentTaskIdToEdit(taskId);
 		dispatch({ type: ModalAction.EDIT });
-	};
+	}, []);
 
-	const handleEditPhoto = async (photo: File[]) => {
+	const handleEditPhoto = useCallback(async (photo: File[]) => {
 		const formData = new FormData();
 		formData.append('image', photo[0]);
 
 		await editUserProfile(formData);
 		router.replace(router.asPath);
-	};
+	}, []);
 
 	const handlePrefetchTask = async (taskId: string) => {
 		return await queryClient.prefetchQuery(
@@ -106,6 +106,6 @@ export const useHome = (): UseHomeProps => {
 		handleDeleteTask,
 		handleEditTask,
 		state,
-		taskId,
+		currentTaskIdToEdit,
 	};
 };

@@ -26,7 +26,6 @@ export const Avatar = ({ userData, handleEditPhoto }: AvatarProps) => {
 				display="flex"
 				alignItems="center"
 				justifyContent="center"
-				h="100%"
 			>
 				<FormLabel
 					opacity={0}

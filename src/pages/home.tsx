@@ -1,7 +1,7 @@
 import { Button, Flex, HStack, Stack } from '@chakra-ui/react';
 import { GetServerSideProps } from 'next';
 import { parseCookies } from 'nookies';
-import { requestsWithSSR } from '../api';
+import { requestsWithSSR } from '../api/requestsWithSSR';
 import { Title } from '../components/Title';
 import { ITask } from '../interfaces/ITask';
 import { AddIcon } from '@chakra-ui/icons';
@@ -22,6 +22,8 @@ interface Props {
 	user: IUser;
 }
 
+const fnCounter = new Set();
+
 export default function Home(props: Props) {
 	const { singOut } = useAuth();
 	const router = useRouter();
@@ -33,8 +35,11 @@ export default function Home(props: Props) {
 		handleDeleteTask,
 		handleEditTask,
 		state,
-		taskId,
+		currentTaskIdToEdit,
 	} = useHome();
+
+	fnCounter.add(handleEditPhoto);
+	console.log(fnCounter.size);
 
 	return (
 		<Flex direction="column" px={{ base: '8', '3xl': 0 }}>
@@ -73,6 +78,7 @@ export default function Home(props: Props) {
 					);
 				})}
 			</Stack>
+
 			<AddTaskModal
 				isOpen={state.modalAddTask}
 				onClose={() => dispatch({ type: ModalAction.CLOSE })}
@@ -80,7 +86,7 @@ export default function Home(props: Props) {
 			<EditTaskModal
 				isOpen={state.modalEditTask}
 				onClose={() => dispatch({ type: ModalAction.CLOSE })}
-				taskId={taskId}
+				taskId={currentTaskIdToEdit}
 			/>
 		</Flex>
 	);

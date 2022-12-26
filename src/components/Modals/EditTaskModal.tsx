@@ -57,7 +57,7 @@ export const EditTaskModal = ({ isOpen, onClose, taskId }: AddTaskModal) => {
 		return valuesToEdit;
 	};
 
-	const handleFinishRequest = () => {
+	const clearAllFieldsWhenFinishRequest = () => {
 		reset();
 		onClose();
 		router.replace(router.asPath);
@@ -70,7 +70,7 @@ export const EditTaskModal = ({ isOpen, onClose, taskId }: AddTaskModal) => {
 			await editTask(taskToEdit, taskId);
 
 			handleSuccessToast({ title: 'Tarefa editada com sucesso' });
-			handleFinishRequest();
+			clearAllFieldsWhenFinishRequest();
 		} catch (err: any) {
 			handleErrorToast({
 				title: 'Erro ao editar task',

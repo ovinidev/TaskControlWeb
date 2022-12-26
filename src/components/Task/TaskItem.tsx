@@ -24,7 +24,9 @@ export const TaskItem = ({
 					marginBottom: '4rem',
 				},
 			}}
+			w="100%"
 			color="black"
+			justify="center"
 		>
 			<Flex
 				onMouseEnter={onHover}
@@ -32,13 +34,13 @@ export const TaskItem = ({
 				bg="tertiary"
 				py="4"
 				px="6"
-				w={{ base: '100%', '3xl': 450 }}
+				w={{ base: '80%', '3xl': 450 }}
 				borderLeftRadius="5px"
 				fontSize="1.2rem"
 				align="center"
 				justify="space-between"
 			>
-				<Flex direction="column">
+				<Flex w="70%" direction="column">
 					<Text>Task: {task.name}</Text>
 					<Text>Detalhes: {task.description}</Text>
 					<Text>Horas: {task.hours}</Text>
