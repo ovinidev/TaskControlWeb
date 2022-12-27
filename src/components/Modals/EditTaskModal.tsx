@@ -13,7 +13,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { editTask } from '../../api/task';
-import { useActualDate } from '../../hooks/useActualDate';
+import { getActualDate } from '../../utils/getActualDate';
 import { useToasts } from '../../hooks/useToasts';
 import { IUpdateTask } from '../../interfaces/ITask';
 import { ButtonSubmit } from '../Form/ButtonSubmit';
@@ -79,7 +79,7 @@ export const EditTaskModal = ({ isOpen, onClose, taskId }: AddTaskModal) => {
 		}
 	});
 
-	const { takeActualDate } = useActualDate();
+	const { actualDate } = getActualDate();
 
 	const onSubmit = async (data: IUpdateTask) => {
 		const date = data?.date?.toString();
@@ -150,7 +150,7 @@ export const EditTaskModal = ({ isOpen, onClose, taskId }: AddTaskModal) => {
 									_placeholder={{ color: 'gray.300' }}
 									color="black"
 									labelColor={'black'}
-									max={takeActualDate()}
+									max={actualDate}
 								/>
 								<ButtonSubmit
 									title="Editar"

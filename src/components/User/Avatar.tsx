@@ -46,7 +46,7 @@ export const Avatar = ({ userData, handleEditPhoto }: AvatarProps) => {
 					w="1rem"
 					type="file"
 					accept="image/*"
-					onChange={(e: any) => handleEditPhoto(e.target.files)}
+					onChange={(e) => handleEditPhoto(e.target.files)}
 				/>
 			</FormControl>
 		</ChakraAvatar>

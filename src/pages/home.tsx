@@ -22,8 +22,6 @@ interface Props {
 	user: IUser;
 }
 
-const fnCounter = new Set();
-
 export default function Home(props: Props) {
 	const { singOut } = useAuth();
 	const router = useRouter();
@@ -37,9 +35,6 @@ export default function Home(props: Props) {
 		state,
 		currentTaskIdToEdit,
 	} = useHome();
-
-	fnCounter.add(handleEditPhoto);
-	console.log(fnCounter.size);
 
 	return (
 		<Flex direction="column" px={{ base: '8', '3xl': 0 }}>
