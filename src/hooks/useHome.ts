@@ -32,13 +32,17 @@ interface UseHomeProps {
 
 export const useHome = (): UseHomeProps => {
 	const router = useRouter();
-	const { handleErrorToast } = useToasts();
+	const { handleErrorToast, handleSuccessToast } = useToasts();
 	const [currentTaskIdToEdit, setCurrentTaskIdToEdit] = useState('');
 
 	const handleDeleteTask = async (taskId: string) => {
 		try {
 			await deleteTask(taskId);
 			router.replace(router.asPath);
+			handleSuccessToast({
+				title: 'Task deletada',
+				description: 'Task deletada com sucesso',
+			});
 		} catch (err: any) {
 			handleErrorToast({ title: err.message });
 		}

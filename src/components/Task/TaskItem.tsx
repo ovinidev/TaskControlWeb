@@ -53,6 +53,7 @@ export const TaskItem = ({
 						transition="all 0.6s"
 						variant="unstyled"
 						onClick={handleDeleteTask}
+						id="cy-delete"
 					>
 						<DeleteIcon fontSize="1.7rem" />
 					</Button>

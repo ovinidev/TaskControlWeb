@@ -15,6 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
 			<ReactQueryDevtools />
 			<ChakraProvider theme={theme}>
 				<Switcher
+					className="cy-switcher"
 					handleTheme={handleTheme}
 					onClick={handleTheme}
 					size="lg"

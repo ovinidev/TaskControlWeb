@@ -30,5 +30,8 @@ module.exports = {
 		'react/jsx-no-constructed-context-values': 'off',
 		'import/no-extraneous-dependencies': 'off',
 		'@typescript-eslint/ban-ts-comment': 'off',
+		test: /\.tsx?$/,
+		use: 'ts-loader',
+		exclude: /node_modules/,
 	},
 };

@@ -39,7 +39,7 @@ export default function Home(props: Props) {
 	return (
 		<Flex direction="column" px={{ base: '8', '3xl': 0 }}>
 			<title>Home</title>
-			<Button w="2rem" onClick={singOut}>
+			<Button id="cy-logout" w="2rem" onClick={singOut}>
 				Logout
 			</Button>
 			<HStack spacing="4" py="8" justify="center" align="center">
@@ -55,6 +55,7 @@ export default function Home(props: Props) {
 					variant="unstyled"
 					onClick={() => dispatch({ type: ModalAction.ADD })}
 					color="secondary"
+					id="cy-add"
 				>
 					<AddIcon fontSize="1.8rem" />
 				</Button>
