@@ -42,8 +42,6 @@ Você pode visualizar a funcionalidade do projeto através do
 Agora você pode acessar [`localhost:3000`](http://localhost:3000) do seu
 navegador.
 
-<img src="https://i.imgur.com/kBEIygl.png">
-
 <div>
   <img align="left" src="https://avatars.githubusercontent.com/u/62653539?v=4" width=35 alt="Profile"/>
   <sub>Made with 💜 by <a href="https://github.com/ovinidev">Vinícius Medeiros</a></sub>
